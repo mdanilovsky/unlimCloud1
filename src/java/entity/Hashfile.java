@@ -38,12 +38,12 @@ public class Hashfile implements Serializable {
     @Size(min = 1, max = 45)
     private String hash;
     private Integer position;
-    @JoinColumn(name = "cuid", referencedColumnName = "cuid")
-    @ManyToOne(optional = false)
-    private Clouduser cuid;
     @JoinColumn(name = "fid", referencedColumnName = "fid")
     @ManyToOne(optional = false)
     private File fid;
+    @JoinColumn(name = "cuid", referencedColumnName = "cuid")
+    @ManyToOne(optional = false)
+    private Clouduser cuid;
 
     public Hashfile() {
     }
@@ -81,20 +81,20 @@ public class Hashfile implements Serializable {
         this.position = position;
     }
 
-    public Clouduser getCuid() {
-        return cuid;
-    }
-
-    public void setCuid(Clouduser cuid) {
-        this.cuid = cuid;
-    }
-
     public File getFid() {
         return fid;
     }
 
     public void setFid(File fid) {
         this.fid = fid;
+    }
+
+    public Clouduser getCuid() {
+        return cuid;
+    }
+
+    public void setCuid(Clouduser cuid) {
+        this.cuid = cuid;
     }
 
     @Override

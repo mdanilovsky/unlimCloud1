@@ -54,36 +54,27 @@ public class webctrl extends HttpServlet {
         String userPath = request.getServletPath();
         if ("/signin".equals(userPath)) {
             // TODO: обработка запроса статьи
-            String email = null;
-            String pass = null;
-            String pass2 = null;
-            String type = null;
+            String email=null;
+            String pass=null;
+            String pass2=null;
+            String type=null;
             Enumeration<String> params = request.getParameterNames();
             while (params.hasMoreElements()) {
                 String param = params.nextElement();
-                email = "email".equals(param) ? request.getParameter(param) : email;
-                pass = "password".equals(param) ? request.getParameter(param) : pass;
-                pass2 = "password2".equals(param) ? request.getParameter(param) : pass2;
-                type = "reg".equals(param) ? "reg" : "signin";
+                email="email".equals(param)?request.getParameter(param):email;
+                pass="password".equals(param)?request.getParameter(param):pass;
+                pass2="password2".equals(param)?request.getParameter(param):pass2;
+                type="reg".equals(param)?"reg":"signin";
             }
-
-            if (type.equals("reg")) {
-                int codeOperation = zeonUserFacade.addUser(email, pass, pass2);
-
-                if (codeOperation ==2) {
-                    request.setAttribute("notif", "Пароли не совпадают или вы забыли про E-mail" );
-                } 
-                if (codeOperation ==3) {
-                    request.setAttribute("notif", "Пользователь с e-mail "+email+" уже зарегестрирован" );
-                } 
-                if (codeOperation == 0) {
-                    request.setAttribute("notif", "Пользователь " + email + " успешно создан!");
-                }
-            } 
             
-            if (type.equals("signin")) {
-                request.setAttribute("notif","Заходим под пользователем " + email + "#" + pass);
+            if(type.equals("reg")){
+                  Long codeOperation=zeonUserFacade.addUser(email, pass, pass2);
+            if (codeOperation!=0)
+            {request.setAttribute("notif", "Код завершения операции: "+codeOperation);}
+            else
+            {request.setAttribute("notif", "Пользователь "+email+" успешно создан!");}
             }
+            else System.out.println("Заходим под пользователем "+email+"#"+pass);
         } else if ("/upload".equals(userPath)) {
             //TODO: обработка запроса регистрации
         }

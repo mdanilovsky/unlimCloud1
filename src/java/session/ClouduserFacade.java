@@ -34,7 +34,7 @@ public class ClouduserFacade extends AbstractFacade<Clouduser> {
         List resultList = em.createNamedQuery("Clouduser.sumFreespace").getResultList();
 
         return Long.valueOf(resultList.get(0).toString());
-}
+    }
     
    
 }
