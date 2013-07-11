@@ -6,6 +6,7 @@ package session;
 
 import entity.Zeonuser;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -31,23 +32,23 @@ public class ZeonuserFacade extends AbstractFacade<Zeonuser> {
     }
     
         @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Long addUser(final String login, final String password, final String passwordTwo) {
+    public int addUser(final String login, final String password, final String passwordTwo) {
         try {
             if (login != null && password != null && passwordTwo != null && password.equals(passwordTwo)) {
                 List resultList = em.createNamedQuery("Zeonuser.findByEmail").setParameter("email", login).getResultList();
                 if (resultList.size() == 0) {
-                    Zeonuser user = new Zeonuser(null,login, password,null);
+                    Zeonuser user = new Zeonuser(login, password,UUID.randomUUID().toString().replace("-", "").substring(0, 10));
                     em.persist(user);                    
-                    return user.getZuid();
+                    return 0;
                 } else {
-                    return Long.valueOf(3);
-                }
+                    return 3;
+}
             } else {
-                return Long.valueOf(2);
+                return 2;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return Long.valueOf(1);
+            return 1;
         }
     }
 }

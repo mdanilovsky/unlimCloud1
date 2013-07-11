@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,8 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "File.findAll", query = "SELECT f FROM File f"),
     @NamedQuery(name = "File.findByFid", query = "SELECT f FROM File f WHERE f.fid = :fid"),
-    @NamedQuery(name = "File.findByHash", query = "SELECT f FROM File f WHERE f.hash = :hash"),
-    @NamedQuery(name = "File.findByLastmodified", query = "SELECT f FROM File f WHERE f.lastmodified = :lastmodified")})
+    @NamedQuery(name = "File.findByHash", query = "SELECT f FROM File f WHERE f.hash = :hash")})
 public class File implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,17 +40,10 @@ public class File implements Serializable {
     @NotNull
     @Size(min = 1, max = 500)
     private String hash;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 300)
-    private String lastmodified;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fid")
-    private Collection<Hashfile> hashfileCollection;
-    @JoinColumn(name = "cuid", referencedColumnName = "cuid")
-    @ManyToOne(optional = false)
-    private Clouduser cuid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "file")
     private Collection<Zeonfile> zeonfileCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fid")
+    private Collection<Hashfile> hashfileCollection;
 
     public File() {
     }
@@ -62,10 +52,9 @@ public class File implements Serializable {
         this.fid = fid;
     }
 
-    public File(Long fid, String hash, String lastmodified) {
+    public File(Long fid, String hash) {
         this.fid = fid;
         this.hash = hash;
-        this.lastmodified = lastmodified;
     }
 
     public Long getFid() {
@@ -84,12 +73,13 @@ public class File implements Serializable {
         this.hash = hash;
     }
 
-    public String getLastmodified() {
-        return lastmodified;
+    @XmlTransient
+    public Collection<Zeonfile> getZeonfileCollection() {
+        return zeonfileCollection;
     }
 
-    public void setLastmodified(String lastmodified) {
-        this.lastmodified = lastmodified;
+    public void setZeonfileCollection(Collection<Zeonfile> zeonfileCollection) {
+        this.zeonfileCollection = zeonfileCollection;
     }
 
     @XmlTransient
@@ -99,23 +89,6 @@ public class File implements Serializable {
 
     public void setHashfileCollection(Collection<Hashfile> hashfileCollection) {
         this.hashfileCollection = hashfileCollection;
-    }
-
-    public Clouduser getCuid() {
-        return cuid;
-    }
-
-    public void setCuid(Clouduser cuid) {
-        this.cuid = cuid;
-    }
-
-    @XmlTransient
-    public Collection<Zeonfile> getZeonfileCollection() {
-        return zeonfileCollection;
-    }
-
-    public void setZeonfileCollection(Collection<Zeonfile> zeonfileCollection) {
-        this.zeonfileCollection = zeonfileCollection;
     }
 
     @Override

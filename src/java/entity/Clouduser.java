@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Clouduser.findAll", query = "SELECT c FROM Clouduser c"),
     @NamedQuery(name = "Clouduser.sumFreespace", query = "SELECT SUM(c.freespace) FROM Clouduser c"),
+    @NamedQuery(name = "Clouduser.getPair", query = "SELECT c FROM Clouduser c WHERE c.freespace>10000"),
     @NamedQuery(name = "Clouduser.findByCuid", query = "SELECT c FROM Clouduser c WHERE c.cuid = :cuid"),
     @NamedQuery(name = "Clouduser.findByLogin", query = "SELECT c FROM Clouduser c WHERE c.login = :login"),
     @NamedQuery(name = "Clouduser.findByPassword", query = "SELECT c FROM Clouduser c WHERE c.password = :password"),
@@ -52,13 +53,11 @@ public class Clouduser implements Serializable {
     @Size(min = 1, max = 100)
     private String password;
     private BigInteger freespace;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuid")
-    private Collection<Hashfile> hashfileCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuid")
-    private Collection<File> fileCollection;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
     @ManyToOne(optional = false)
     private Cloudtype cid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuid")
+    private Collection<Hashfile> hashfileCollection;
 
     public Clouduser() {
     }
@@ -105,6 +104,14 @@ public class Clouduser implements Serializable {
         this.freespace = freespace;
     }
 
+    public Cloudtype getCid() {
+        return cid;
+    }
+
+    public void setCid(Cloudtype cid) {
+        this.cid = cid;
+    }
+
     @XmlTransient
     public Collection<Hashfile> getHashfileCollection() {
         return hashfileCollection;
@@ -112,23 +119,6 @@ public class Clouduser implements Serializable {
 
     public void setHashfileCollection(Collection<Hashfile> hashfileCollection) {
         this.hashfileCollection = hashfileCollection;
-    }
-
-    @XmlTransient
-    public Collection<File> getFileCollection() {
-        return fileCollection;
-    }
-
-    public void setFileCollection(Collection<File> fileCollection) {
-        this.fileCollection = fileCollection;
-    }
-
-    public Cloudtype getCid() {
-        return cid;
-    }
-
-    public void setCid(Cloudtype cid) {
-        this.cid = cid;
     }
 
     @Override
