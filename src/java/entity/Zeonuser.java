@@ -67,7 +67,11 @@ public class Zeonuser implements Serializable {
         this.password = password;
         this.tocken = tocken;
     }
-    
+    public Zeonuser(String email, String password, String tocken) {
+        this.email = email;
+        this.password = password;
+        this.tocken = tocken;
+    }
 
     public Long getZuid() {
         return zuid;

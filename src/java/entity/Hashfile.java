@@ -7,6 +7,8 @@ package entity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,12 +32,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Hashfile implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    private Long hid;
     @Basic(optional = false)
     @NotNull
-    private Integer hid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 64)
     private String hash;
     private Integer position;
     @JoinColumn(name = "fid", referencedColumnName = "fid")
@@ -48,20 +50,20 @@ public class Hashfile implements Serializable {
     public Hashfile() {
     }
 
-    public Hashfile(Integer hid) {
+    public Hashfile(Long hid) {
         this.hid = hid;
     }
 
-    public Hashfile(Integer hid, String hash) {
+    public Hashfile(Long hid, String hash) {
         this.hid = hid;
         this.hash = hash;
     }
 
-    public Integer getHid() {
+    public Long getHid() {
         return hid;
     }
 
-    public void setHid(Integer hid) {
+    public void setHid(Long hid) {
         this.hid = hid;
     }
 

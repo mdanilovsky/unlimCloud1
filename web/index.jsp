@@ -34,9 +34,9 @@
                 <p>Что бы регистрация прошла успешно, заполните все поля и нажмите на
                     кнопку</p>
 
-                <c:if test="${notif} ne null">
+                <c:if test="${notif ne null}">
                     <div class="notif">
-                        <span>${notif}</span> 
+                        <span><c:out value="${notif}" /></span> 
                     </div>
                 </c:if>
                 <form method="POST" action="signin">

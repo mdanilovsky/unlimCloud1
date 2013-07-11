@@ -6,7 +6,6 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Zeonfile.findByZfid", query = "SELECT z FROM Zeonfile z WHERE z.zeonfilePK.zfid = :zfid"),
     @NamedQuery(name = "Zeonfile.findByLastmodified", query = "SELECT z FROM Zeonfile z WHERE z.lastmodified = :lastmodified"),
     @NamedQuery(name = "Zeonfile.findByFid", query = "SELECT z FROM Zeonfile z WHERE z.zeonfilePK.fid = :fid"),
-    @NamedQuery(name = "Zeonfile.findByParentZfid", query = "SELECT z FROM Zeonfile z WHERE z.parentZfid = :parentZfid")})
+    @NamedQuery(name = "Zeonfile.findByPath", query = "SELECT z FROM Zeonfile z WHERE z.path = :path"),
+    @NamedQuery(name = "Zeonfile.findByName", query = "SELECT z FROM Zeonfile z WHERE z.name = :name")})
 public class Zeonfile implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -37,8 +37,10 @@ public class Zeonfile implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     private String lastmodified;
-    @Column(name = "parent_zfid")
-    private Integer parentZfid;
+    @Size(max = 450)
+    private String path;
+    @Size(max = 450)
+    private String name;
     @JoinColumn(name = "zuid", referencedColumnName = "zuid")
     @ManyToOne(optional = false)
     private Zeonuser zuid;
@@ -78,12 +80,20 @@ public class Zeonfile implements Serializable {
         this.lastmodified = lastmodified;
     }
 
-    public Integer getParentZfid() {
-        return parentZfid;
+    public String getPath() {
+        return path;
     }
 
-    public void setParentZfid(Integer parentZfid) {
-        this.parentZfid = parentZfid;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Zeonuser getZuid() {
