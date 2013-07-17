@@ -27,4 +27,14 @@ public class FileFacade extends AbstractFacade<File> {
         super(File.class);
     }
     
+    public File addFile(String hash){
+        File EF=new File();
+        EF.setHash(hash);
+         
+        em.persist(EF);
+        em.flush();
+        
+        return EF;
+    }
+    
 }

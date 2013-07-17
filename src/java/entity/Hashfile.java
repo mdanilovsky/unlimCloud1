@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Hashfile.findAll", query = "SELECT h FROM Hashfile h"),
     @NamedQuery(name = "Hashfile.findByHid", query = "SELECT h FROM Hashfile h WHERE h.hid = :hid"),
+    @NamedQuery(name = "Hashfile.findByFid", query = "SELECT h FROM Hashfile h WHERE h.fid = :fid"),
     @NamedQuery(name = "Hashfile.findByHash", query = "SELECT h FROM Hashfile h WHERE h.hash = :hash"),
     @NamedQuery(name = "Hashfile.findByPosition", query = "SELECT h FROM Hashfile h WHERE h.position = :position")})
 public class Hashfile implements Serializable {

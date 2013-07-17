@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.ClouduserFacade;
+import session.FileFacade;
 import session.ZeonuserFacade;
 
 /**
@@ -29,6 +30,7 @@ public class webctrl extends HttpServlet {
     ClouduserFacade cloudUserFacade;
     @EJB
     ZeonuserFacade zeonUserFacade;
+    
 
     @Override
     public void init() throws ServletException {
@@ -83,10 +85,13 @@ public class webctrl extends HttpServlet {
             
             if (type.equals("signin")) {
                 request.setAttribute("notif","Заходим под пользователем " + email + "#" + pass);
+                
             }
         } else if ("/upload".equals(userPath)) {
-            //TODO: обработка запроса регистрации
+            //TODO: обработка запроса загрузки файла
+           
         }
+        
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }

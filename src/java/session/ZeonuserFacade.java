@@ -31,6 +31,16 @@ public class ZeonuserFacade extends AbstractFacade<Zeonuser> {
         super(Zeonuser.class);
     }
     
+    public Zeonuser findByZuid(Long zuid){
+       System.out.println(zuid);
+       
+        List<Zeonuser> resultList = em.createNamedQuery("Zeonuser.findByZfid").setParameter("zuid", zuid).getResultList();
+        System.out.println(resultList.size());
+        if(resultList.isEmpty())
+            return null;
+        return resultList.get(0);
+    }
+    
         @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public int addUser(final String login, final String password, final String passwordTwo) {
         try {

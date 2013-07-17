@@ -4,7 +4,9 @@
  */
 package session;
 
+import entity.File;
 import entity.Zeonfile;
+import entity.Zeonuser;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +27,18 @@ public class ZeonfileFacade extends AbstractFacade<Zeonfile> {
 
     public ZeonfileFacade() {
         super(Zeonfile.class);
+    }
+    
+    public void addZeonfile(File EF,String name,String path,String lmodified,Zeonuser ZUID){
+        Zeonfile ZF=new Zeonfile();
+        
+        ZF.setFid(EF);
+        ZF.setZuid(ZUID);
+        ZF.setName(name);
+        ZF.setPath(path);
+        ZF.setLastmodified(lmodified);
+                
+        em.persist(ZF);
     }
     
 }

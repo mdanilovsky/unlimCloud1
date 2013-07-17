@@ -6,12 +6,16 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,55 +25,59 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author fyntom
  */
 @Entity
+@Table(name = "ZEONFILE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Zeonfile.findAll", query = "SELECT z FROM Zeonfile z"),
-    @NamedQuery(name = "Zeonfile.findByZfid", query = "SELECT z FROM Zeonfile z WHERE z.zeonfilePK.zfid = :zfid"),
+    @NamedQuery(name = "Zeonfile.findByZfid", query = "SELECT z FROM Zeonfile z WHERE z.zfid = :zfid"),
     @NamedQuery(name = "Zeonfile.findByLastmodified", query = "SELECT z FROM Zeonfile z WHERE z.lastmodified = :lastmodified"),
-    @NamedQuery(name = "Zeonfile.findByFid", query = "SELECT z FROM Zeonfile z WHERE z.zeonfilePK.fid = :fid"),
     @NamedQuery(name = "Zeonfile.findByPath", query = "SELECT z FROM Zeonfile z WHERE z.path = :path"),
+    @NamedQuery(name = "Zeonfile.findByPathNameZuid", query = "SELECT z FROM Zeonfile z WHERE z.path = :path and z.name=:name and z.zuid=:zuid"),
+    @NamedQuery(name = "Zeonfile.findByZuid", query = "SELECT z FROM Zeonfile z WHERE z.zuid = :zuid"),
     @NamedQuery(name = "Zeonfile.findByName", query = "SELECT z FROM Zeonfile z WHERE z.name = :name")})
 public class Zeonfile implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ZeonfilePK zeonfilePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "zfid")
+    private Long zfid;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "lastmodified")
     private String lastmodified;
     @Size(max = 450)
+    @Column(name = "path")
     private String path;
     @Size(max = 450)
+    @Column(name = "name")
     private String name;
     @JoinColumn(name = "zuid", referencedColumnName = "zuid")
     @ManyToOne(optional = false)
     private Zeonuser zuid;
-    @JoinColumn(name = "fid", referencedColumnName = "fid", insertable = false, updatable = false)
+    @JoinColumn(name = "fid", referencedColumnName = "fid")
     @ManyToOne(optional = false)
-    private File file;
+    private File fid;
 
     public Zeonfile() {
     }
 
-    public Zeonfile(ZeonfilePK zeonfilePK) {
-        this.zeonfilePK = zeonfilePK;
+    public Zeonfile(Long zfid) {
+        this.zfid = zfid;
     }
 
-    public Zeonfile(ZeonfilePK zeonfilePK, String lastmodified) {
-        this.zeonfilePK = zeonfilePK;
+    public Zeonfile(Long zfid, String lastmodified) {
+        this.zfid = zfid;
         this.lastmodified = lastmodified;
     }
 
-    public Zeonfile(long zfid, long fid) {
-        this.zeonfilePK = new ZeonfilePK(zfid, fid);
+    public Long getZfid() {
+        return zfid;
     }
 
-    public ZeonfilePK getZeonfilePK() {
-        return zeonfilePK;
-    }
-
-    public void setZeonfilePK(ZeonfilePK zeonfilePK) {
-        this.zeonfilePK = zeonfilePK;
+    public void setZfid(Long zfid) {
+        this.zfid = zfid;
     }
 
     public String getLastmodified() {
@@ -104,18 +112,18 @@ public class Zeonfile implements Serializable {
         this.zuid = zuid;
     }
 
-    public File getFile() {
-        return file;
+    public File getFid() {
+        return fid;
     }
 
-    public void setFile(File file) {
-        this.file = file;
+    public void setFid(File fid) {
+        this.fid = fid;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (zeonfilePK != null ? zeonfilePK.hashCode() : 0);
+        hash += (zfid != null ? zfid.hashCode() : 0);
         return hash;
     }
 
@@ -126,7 +134,7 @@ public class Zeonfile implements Serializable {
             return false;
         }
         Zeonfile other = (Zeonfile) object;
-        if ((this.zeonfilePK == null && other.zeonfilePK != null) || (this.zeonfilePK != null && !this.zeonfilePK.equals(other.zeonfilePK))) {
+        if ((this.zfid == null && other.zfid != null) || (this.zfid != null && !this.zfid.equals(other.zfid))) {
             return false;
         }
         return true;
@@ -134,7 +142,7 @@ public class Zeonfile implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Zeonfile[ zeonfilePK=" + zeonfilePK + " ]";
+        return "entity.Zeonfile[ zfid=" + zfid + " ]";
     }
     
 }

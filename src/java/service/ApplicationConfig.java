@@ -36,9 +36,7 @@ public class ApplicationConfig extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.CloudtypeFacadeREST.class);
         resources.add(service.ClouduserFacadeREST.class);
-        resources.add(service.FileFacadeREST.class);
         resources.add(service.HashfileFacadeREST.class);
         resources.add(service.ZeonfileFacadeREST.class);
         resources.add(service.ZeonuserFacadeREST.class);

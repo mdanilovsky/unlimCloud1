@@ -7,7 +7,8 @@ package service;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-/**
+/**@EJB
+    FileFacade fileFacade;
  *
  * @author fyntom
  */
