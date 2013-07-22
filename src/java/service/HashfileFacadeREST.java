@@ -78,10 +78,7 @@ public class HashfileFacadeREST extends AbstractFacade<Hashfile> {
     @Produces({"application/xml"})
     public List<Hashfile> find(@PathParam("hash") String hash) {
         List resultList = em.createNamedQuery("Hashfile.findByHash").setParameter("hash", hash).getResultList();
-        if(resultList.isEmpty()){
-            System.out.println("Пусто однако "+hash);
-            return null;
-       }
+        
         return resultList;
     }
 
@@ -95,10 +92,7 @@ public class HashfileFacadeREST extends AbstractFacade<Hashfile> {
             return null;
         
         List resultList = em.createNamedQuery("Hashfile.findByFid").setParameter("fid", ZF).getResultList();
-        if(resultList.isEmpty()){
-            System.out.println("Пусто однако "+fid);
-            return null;
-       }
+        
         return resultList;
     }
 

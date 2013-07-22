@@ -99,7 +99,7 @@ public class ZeonfileFacadeREST extends AbstractFacade<Zeonfile> {
         List<Zeonfile> resultList = em.createNamedQuery("Zeonfile.findByName").setParameter("name", name).getResultList();
         if (resultList.isEmpty()) {
             // System.out.println("Пусто однако "+zuid);
-            return null;
+            return "0";
         }
         return String.valueOf(resultList.get(0).getFid().getFid());
     }
@@ -114,10 +114,6 @@ public class ZeonfileFacadeREST extends AbstractFacade<Zeonfile> {
         }
         //System.out.println(ZU.toString());
         List <Zeonfile>resultList = em.createNamedQuery("Zeonfile.findByZuid").setParameter("zuid", ZU).getResultList();
-        if (resultList.isEmpty()) {
-            // System.out.println("Пусто однако "+zuid);
-            return null;
-        }
                 
         return resultList;
     }

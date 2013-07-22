@@ -9,6 +9,7 @@ import entity.Clouduser;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import session.ClouduserFacade;
 
 /**
  *
@@ -30,6 +32,9 @@ import javax.ws.rs.Produces;
 public class ClouduserFacadeREST extends AbstractFacade<Clouduser> {
     @PersistenceContext(unitName = "zeonserverPU")
     private EntityManager em;
+    
+    @EJB
+    ClouduserFacade cloudUserFacade;
 
     public ClouduserFacadeREST() {
         super(Clouduser.class);
@@ -42,6 +47,17 @@ public class ClouduserFacadeREST extends AbstractFacade<Clouduser> {
         super.create(entity);
     }
 */
+    @GET
+    @Path("freespace")
+    @Produces({"application/json"})
+    public long getFS() {
+        Long test = cloudUserFacade.sumFreespace();
+
+        test = test / 1024 / 1024 / 1024;
+        
+        return test;
+    }
+    
     @GET
     @Path("{id}")
     @Produces({"application/json"})

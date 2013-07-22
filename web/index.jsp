@@ -73,7 +73,7 @@
             </div>
             <div class="column">
                 <h1><span class="number">3</span> Синхронизируем файлы</h1>
-                <p>Скачать приложение можно  <a href="http://fsfrf.ru/">по ссылке</a> </p>
+                <p>Скачать приложение можно  <a href="dist/zeondriveD v0_1_2.zip">по ссылке</a> </p>
             </div>
             <div class="clear"></div>
             <div class="half">
